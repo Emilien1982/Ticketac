@@ -12,10 +12,12 @@ router.post('/sign-up', async function(req, res) {
   const email = req.body.email;
   const password = req.body.password;
   
+  // si une info est manquante on renvoie vers la page de login
   if (!name || !firstName || !email || !password) {
-    return res.send('You need to provide all the information');
+    return res.render('index', { message: 'You need to provide all the information' });
   }
 
+  // on verifie si l'email est déjà associé a un user existant
   const exisitingEmail = await userModel.findOne({ email: email });
   if (!exisitingEmail) {
     const newUser = new userModel({
@@ -33,9 +35,10 @@ router.post('/sign-up', async function(req, res) {
     };
     return res.redirect('/');
   } else {
-    return res.send('This email is already registrered');
+    return res.render('index', { message: 'This email is already registrered' });
   }
 });
+
 
 router.post('/sign-in', async (req, res) => {
   const searchUser = await userModel.findOne({
@@ -43,6 +46,7 @@ router.post('/sign-in', async (req, res) => {
     password: req.body.password
   });
 
+  // si le user existe bien, on initialise sa session
   if(searchUser != null){
     req.session.user = {
       name: searchUser.name,
@@ -50,8 +54,10 @@ router.post('/sign-in', async (req, res) => {
     };
     return res.redirect('/');
   }
+  // si aucun user n'a été trouvé
   return res.redirect('/login');
 });
+
 
 router.get('/logout', (req, res) => {
   req.session.user = null;

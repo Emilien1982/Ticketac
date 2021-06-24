@@ -7,8 +7,14 @@ const userModel = require('../models/user');
 var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
 var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
 
+// Initialisation d'une variable contenant le nom de domaine
+// Utile pour les url d'images par ex
+let DOMAIN_NAME = '';
+
+
 /* Sign In / Up */
 router.get('/login', (req, res) => {
+  DOMAIN_NAME = req.protocol + '://' + req.get('host');
   res.render('index', { message: false });
 })
 
@@ -17,6 +23,8 @@ router.get('/', function(req, res, next) {
   /* if (!req.session.user){
     return res.redirect('/login');
   } */
+  DOMAIN_NAME = req.protocol + '://' + req.get('host');
+
   res.render('homepage', { title: 'Express' });
 });
 
@@ -37,7 +45,6 @@ router.post('/search', async (req, res) => {
 
 /* Ajouter un trip dans le "panier de la session" */
 router.get('/add-trip', async (req, res) => {
-
   req.session.user.trips.push(req.query.trip_id);
   res.redirect('/checkout');
 });
@@ -82,13 +89,6 @@ router.get('/last-trip', async (req, res) => {
 
   res.render('trips', { trips: user.trips });
 })
-
-
-
-
-
-
-
 
 
 

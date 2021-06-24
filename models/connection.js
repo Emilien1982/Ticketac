@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const { DBLogin } = require('../env');
-
+//const { DBLogin } = require('../env');
+const DBLogin = "Emilien:testMongo@cluster0";
 // useNewUrlParser ;)
 var options = {
   connectTimeoutMS: 5000,

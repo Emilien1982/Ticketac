@@ -1,8 +1,11 @@
-
+#header {
+  width: 100%;
+}
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #00B7FF;
+  background: linear-gradient(#2890f1, #dcdde7);
+  
 }
 
 a {
@@ -13,4 +16,5 @@ a {
 
 display: flex;
 justify-content: center;
+min-height: 400px;
 }

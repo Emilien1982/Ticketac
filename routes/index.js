@@ -4,12 +4,36 @@ var router = express.Router();
 const journeyModel = require('../models/journey');
 const userModel = require('../models/user');
 
-var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
-var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
 
 // Initialisation d'une variable contenant le nom de domaine
 // Utile pour les url d'images par ex
 let DOMAIN_NAME = '';
+
+
+/* ROUTE DE TEST A SUPPRIMER AVANT COMMIT */
+router.get('/test', function(req, res, next) {
+  const results = [
+    {
+      _id: '60d4456035ad7d8621401285',
+      departure: 'Lyon',
+      arrival: 'Paris',
+      date: new Date(2018, 11, 2),
+      departureTime: "11:00",
+      price: 128
+    },
+    {
+      _id: '60d4456035ad7d862140127f',
+      departure: 'Paris',
+      arrival: 'Bordeaux',
+      date: new Date(2018, 11, 23),
+      departureTime: "6:00",
+      price: 27
+    }
+  ];
+  console.log('LENGTH: ', results.length);
+
+  res.render('results', { results });
+});
 
 
 /* Sign In / Up */
@@ -17,6 +41,7 @@ router.get('/login', (req, res) => {
   DOMAIN_NAME = req.protocol + '://' + req.get('host');
   res.render('index', { message: false });
 })
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -36,7 +61,7 @@ router.post('/search', async (req, res) => {
   const results = await journeyModel.find({
     departure: req.body.departure,
     arrival: req.body.arrival,
-    date: requ.body.date
+    date: req.body.date
   });
 
   res.render('results', { results });
@@ -45,21 +70,34 @@ router.post('/search', async (req, res) => {
 
 /* Ajouter un trip dans le "panier de la session" */
 router.get('/add-trip', async (req, res) => {
-  req.session.user.trips.push(req.query.trip_id);
+  if (!req.session.user){
+    console.log('Il faut initialiser la session en passant par sign in');
+    return res.redirect('/login');
+  }
+  if (req.session.user.trips) {
+    req.session.user.trips.push(req.query.trip_id);
+  } else {
+    req.session.user.trips = [req.query.trip_id]
+  }
+  console.log('SESSION: ', req.session.user);
   res.redirect('/checkout');
 });
 
 
 /* Get the checkout */
 router.get('/checkout', async (req, res) => {
-  /* if (!req.session.user){
+  if (!req.session.user){
     return res.redirect('/login');
-  } */
+  }
+  console.log('TRIPS SESSION: ', req.session.user.trips);
+  ////// RESOUDRE LE PROBLEME DE SYNCHRO DANS CETTE ROUTE
   const trips = [];
-  req.session.user.trips.forEach( async (trip_id) => {
-    trips.push( await journeyModel.findById(trip_id) );
+  await req.session.user.trips.forEach( async (trip_id) => {
+    const journey = await journeyModel.findById(trip_id);
+    console.log('FROM DB: ', journey);
+    trips.push( journey );
   })
-  
+  console.log('TRIPS FOR EJS: ', trips);
   res.render('checkout', { trips });
 });
 
@@ -82,7 +120,7 @@ router.get('/confirm-checkout', async (req, res) => {
 })
 
 /* Get Last trips */
-router.get('/last-trip', async (req, res) => {
+router.get('/last-trips', async (req, res) => {
   const user = await userModel
     .findById('req.session.user.id')
     .populate('trips');
@@ -91,6 +129,10 @@ router.get('/last-trip', async (req, res) => {
 })
 
 
+
+
+/* var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
+var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"] */
 
 /* // Remplissage de la base de donnée, une fois suffit
 router.get('/save***************', async function(req, res, next) {

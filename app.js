@@ -35,6 +35,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+// Helpers
+app.locals.dateFormater = (date) => {
+  const day = date.getDate() < 10? '0' + date.getDate() : date.getDate();
+  const month = date.getMonth() < 10? '0' + date.getMonth() : date.getMonth();
+  return day + '/' + month;
+}
+
+app.locals.dateFormaterFull = (date) => {
+  return dateFormater(date) + '/' + date.getFullYear();
+}
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

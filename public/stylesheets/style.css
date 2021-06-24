@@ -2,10 +2,10 @@
   width: 100%;
 }
 body {
-  padding: 50px;
+  padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background: linear-gradient(#2890f1, #dcdde7);
-  
+  min-height: 105vh;
 }
 
 a {
@@ -13,8 +13,21 @@ a {
 }
 
 .footer {
-
+margin-top: 2em;
 display: flex;
 justify-content: center;
 min-height: 400px;
 }
+
+.narrow {
+  max-width: 650px;
+}
+
+
+/* .footer {
+  position: fixed;
+  width: 20vw;
+  text-align: center;
+  left: 40vw;
+  top: 95vh;
+} */

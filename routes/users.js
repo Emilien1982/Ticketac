@@ -3,7 +3,9 @@ var router = express.Router();
 const userModel = require('../models/user');
 
 
-/* GET users listing. */
+/* routes  /users/.... */
+
+
 router.post('/sign-up', async function(req, res) {
   const name = req.body.name;
   const firstName = req.body.firstName;
@@ -26,7 +28,8 @@ router.post('/sign-up', async function(req, res) {
 
     req.session.user = {
       name: savedUser.name,
-      id: savedUser._id
+      id: savedUser._id,
+      trips: []
     };
     return res.redirect('/');
   } else {
@@ -48,14 +51,14 @@ router.post('/sign-in', async (req, res) => {
     return res.redirect('/');
   }
   return res.redirect('/login');
-
-
-
-
-
-
-
 });
+
+router.get('/logout', (req, res) => {
+  req.session.user = null;
+  res.redirect('/login');
+})
+
+
 
 
 module.exports = router;

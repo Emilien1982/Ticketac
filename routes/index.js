@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const journeyModel = require('../models/journey');
+const userModel = require('../models/user');
 
 var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
 var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
@@ -9,8 +10,29 @@ var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  /* if (!req.session.user){
+    return res.redirect('/login');
+  } */
   res.render('index', { title: 'Express' });
 });
+
+router.get('/login', (req, res) => {
+  res.render('login', { message: false });
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* // Remplissage de la base de donnée, une fois suffit

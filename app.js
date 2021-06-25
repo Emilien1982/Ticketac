@@ -40,13 +40,14 @@ app.locals.dateFormater = (date) => {
   const day = date.getDate() < 10? '0' + date.getDate() : date.getDate();
   const month = date.getMonth() < 10? '0' + date.getMonth() : date.getMonth();
   return day + '/' + month;
-}
+};
 
 app.locals.dateFormaterFull = (date) => {
   const day = date.getDate() < 10? '0' + date.getDate() : date.getDate();
   const month = date.getMonth() < 10? '0' + date.getMonth() : date.getMonth();
   return day + '/' + month + '/' + date.getFullYear();
-}
+};
+
 
 
 // catch 404 and forward to error handler

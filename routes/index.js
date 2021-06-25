@@ -4,6 +4,10 @@ var router = express.Router();
 const journeyModel = require('../models/journey');
 const userModel = require('../models/user');
 
+// Helpers
+const capitaliser = (city) => {
+  return city.charAt(0).toUpperCase() + city.slice(1).toLowerCase()
+};
 
 // Initialisation d'une variable contenant le nom de domaine
 // Utile pour les url d'images par ex
@@ -45,9 +49,9 @@ router.get('/login', (req, res) => {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  /* if (!req.session.user){
+  if (!req.session.user){
     return res.redirect('/login');
-  } */
+  }
   DOMAIN_NAME = req.protocol + '://' + req.get('host');
 
   res.render('homepage', { title: 'Express' });
@@ -55,12 +59,13 @@ router.get('/', function(req, res, next) {
 
 /* Search matching journeys */
 router.post('/search', async (req, res) => {
-  /* if (!req.session.user){
+  if (!req.session.user){
     return res.redirect('/login');
-  } */
+  }
+ 
   const results = await journeyModel.find({
-    departure: req.body.departure,
-    arrival: req.body.arrival,
+    departure: capitaliser(req.body.departure),
+    arrival: capitaliser(req.body.arrival),
     date: req.body.date
   });
 

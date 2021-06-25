@@ -1,13 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <%- include('./partials/head') %>
+  <title>Ticketac - Homepage</title>
 </head>
 <body>
-  Hello HOMEPAGE
+  <%- include('./partials/header') %>
+
+
+    <div class="container narrow d-flex flex-column">
+      <h2 class="mt-5 text-light">One-way ticket :</h2>
+      <form action="/search" method="POST">
+        <div class="mb-3">
+          <input type="text" name="departure" class="form-control" placeholder="From: Paris, Marseille..." aria-describedby="departure">
+        </div>
+        <div class="mb-3">
+          <input type="test" name="arrival" class="form-control" placeholder="To: Lille, Nantes...">
+        </div>
+        <div class="mb-3">
+          <input type="date" name="date" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-danger">Go</button>
+      </form>
+    </div>
+
+
+  
+
+
+  <%- include('./partials/footer') %>
+
+
+
 </body>
 </html>

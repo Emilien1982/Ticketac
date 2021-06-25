@@ -38,13 +38,13 @@ app.use('/users', usersRouter);
 // Helpers
 app.locals.dateFormater = (date) => {
   const day = date.getDate() < 10? '0' + date.getDate() : date.getDate();
-  const month = date.getMonth() < 10? '0' + date.getMonth() : date.getMonth();
+  const month = date.getMonth() + 1 < 10? '0' + date.getMonth() + 1 : date.getMonth() + 1;
   return day + '/' + month;
 };
 
 app.locals.dateFormaterFull = (date) => {
   const day = date.getDate() < 10? '0' + date.getDate() : date.getDate();
-  const month = date.getMonth() < 10? '0' + date.getMonth() : date.getMonth();
+  const month = date.getMonth() + 1 < 10? '0' + date.getMonth() + 1 : date.getMonth() + 1;
   return day + '/' + month + '/' + date.getFullYear();
 };
 

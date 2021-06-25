@@ -9,14 +9,9 @@ const capitaliser = (city) => {
   return city.charAt(0).toUpperCase() + city.slice(1).toLowerCase()
 };
 
-// Initialisation d'une variable contenant le nom de domaine
-// Utile pour les url d'images par ex
-let DOMAIN_NAME = '';
-
 
 /* Sign In / Up */
 router.get('/login', (req, res) => {
-  DOMAIN_NAME = req.protocol + '://' + req.get('host');
   res.render('index', { message: false });
 })
 
@@ -26,9 +21,7 @@ router.get('/', function(req, res, next) {
   if (!req.session.user){
     return res.redirect('/login');
   }
-  DOMAIN_NAME = req.protocol + '://' + req.get('host');
-
-  res.render('homepage', { title: 'Express' });
+  res.render('homepage');
 });
 
 /* Search matching journeys */
@@ -36,7 +29,7 @@ router.post('/search', async (req, res) => {
   if (!req.session.user){
     return res.redirect('/login');
   }
- 
+
   const results = await journeyModel.find({
     departure: capitaliser(req.body.departure),
     arrival: capitaliser(req.body.arrival),
@@ -50,7 +43,6 @@ router.post('/search', async (req, res) => {
 /* Ajouter un trip dans le "panier de la session" */
 router.get('/add-trip', async (req, res) => {
   if (!req.session.user){
-    console.log('Il faut initialiser la session en passant par sign in');
     return res.redirect('/login');
   }
   if (req.session.user.trips) {
@@ -96,7 +88,7 @@ router.get('/confirm-checkout', async (req, res) => {
   await userModel.updateOne({ user, trips });
   req.session.user.trips = [];
 
-  res.redirect('/')
+  res.redirect('/');
 })
 
 /* Get Last trips */

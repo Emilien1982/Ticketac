@@ -12,11 +12,11 @@ router.post('/sign-up', async function(req, res) {
   const email = req.body.email;
   const password = req.body.password;
   
-  console.log('DATA: ', name, firstName, email, password);
+  //console.log('DATA: ', name, firstName, email, password);
 
   // si une info est manquante on renvoie vers la page de login
   if (!name || !firstName || !email || !password) {
-    return res.render('index', { message: 'You need to provide all the information' });
+    return res.render('index', { message: 'You need to provide all the informations' });
   }
 
   // on verifie si l'email est déjà associé a un user existant
@@ -26,7 +26,8 @@ router.post('/sign-up', async function(req, res) {
       name: name,
       firstName: firstName,
       email: email,
-      password: password
+      password: password,
+      trips:[]
     })
     const savedUser = await newUser.save();
 
@@ -52,12 +53,13 @@ router.post('/sign-in', async (req, res) => {
   if(searchUser != null){
     req.session.user = {
       name: searchUser.name,
-      id: searchUser._id
+      id: searchUser._id,
+      trips: []
     };
     return res.redirect('/');
   }
   // si aucun user n'a été trouvé
-  return res.redirect('/login');
+  return res.render('index', { message: "email and password don't match" });
 });
 
 
@@ -65,8 +67,6 @@ router.get('/logout', (req, res) => {
   req.session.user = null;
   res.redirect('/login');
 })
-
-
 
 
 module.exports = router;

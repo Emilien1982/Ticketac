@@ -90,21 +90,22 @@ router.get('/checkout', async (req, res) => {
     return res.redirect('/login');
   }
   console.log('TRIPS SESSION: ', req.session.user.trips);
-  ////// RESOUDRE LE PROBLEME DE SYNCHRO DANS CETTE ROUTE
+
   const trips = [];
-  await req.session.user.trips.forEach( async (trip_id) => {
-    const journey = await journeyModel.findById(trip_id);
-    console.log('FROM DB: ', journey);
-    trips.push( journey );
-  })
+  for (let i = 0; i < req.session.user.trips.length; i++){
+    const journey = await journeyModel.findById(req.session.user.trips[i]);
+    trips.push(journey);
+    console.log('TRIPS DURING LOOP: ', trips);
+  }
+
   console.log('TRIPS FOR EJS: ', trips);
   res.render('checkout', { trips });
 });
 
 router.get('/confirm-checkout', async (req, res) => {
-  /* if (!req.session.user){
+  if (!req.session.user){
     return res.redirect('/login');
-  } */
+  }
 
   // les trips sont stockés dans le user de la BDD
   const user = await userModel.findById(req.query.trip_id);

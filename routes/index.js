@@ -128,7 +128,7 @@ router.get('/confirm-checkout', async (req, res) => {
 /* Get Last trips */
 router.get('/last-trips', async (req, res) => {
   const user = await userModel
-    .findById('req.session.user.id')
+    .findById(req.session.user.id)
     .populate('trips');
 
   res.render('trips', { trips: user.trips });

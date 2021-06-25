@@ -8,20 +8,31 @@
   <%- include('./partials/header') %>
 
 
-    <div class="container narrow d-flex flex-column">
+    <div class="container d-flex flex-column">
       <h2 class="mt-5 text-light">One-way ticket :</h2>
-      <form action="/search" method="POST">
-        <div class="mb-3">
-          <input type="text" name="departure" class="form-control" placeholder="From: Paris, Marseille..." aria-describedby="departure">
-        </div>
-        <div class="mb-3">
-          <input type="test" name="arrival" class="form-control" placeholder="To: Lille, Nantes...">
-        </div>
-        <div class="mb-3">
-          <input type="date" name="date" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-danger">Go</button>
-      </form>
+      <div class="row mt-1 w-100">
+        <form class="d-flex flex-wrap" action="/search" method="POST">
+          <div class="row">
+            <div class="col-12 col-lg-3 flex-grow-1 d-block mb-3 me-2">
+              <input type="text" name="departure" class="form-control" placeholder="From: Paris, Marseille..." aria-describedby="departure">
+            </div>
+            <div class="col-12 col-lg-3 flex-grow-1 mb-3 me-2">
+              <input type="test" name="arrival" class="form-control" placeholder="To: Lille, Nantes...">
+            </div>
+            <div class="col-12 col-lg-3 mb-3 me-2">
+              <input type="date" name="date" class="form-control">
+            </div>
+            <div class="col-12 col-lg-1 mb-3 me-2">
+              <button type="submit" class="btn btn-danger float-end">Go</button>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+      
+    </div>
+    <div class="d-flex justify-content-center monuments mt-5">
+      <img src="../images/landmark.png" alt="monuments">
     </div>
 
 

@@ -1,12 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <%- include('./partials/head') %>
+  <title>Ticketac - My last trips</title>
 </head>
 <body>
-  Hello TRIPS
+  <%- include('./partials/header') %>
+<!-- PAGE A TESTER -->
+  <% if (trips.length < 1) { %>
+    <div class="my-3 d-flex flex-column align-items-center">
+      <h2 class="text-light text-center">Ooops! No registred trips yet...</h2>
+      <a href="/">
+        <button type="button" class="btn btn-danger">Home</button>
+      </a>
+    </div>
+  <% } else { %>
+    <div class="container narrow d-flex flex-column">
+      <h2 class="mt-5 text-light">My last trips :</h2>
+      <div class="mt-3">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">journey</th>
+              <th scope="col">Departure Time</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% trips.forEach(trip => { %>
+                <tr>
+                  <th scope="row"><%= dateFormaterFull(trip.date) %></th>
+                  <td><%= trip.departure %> / <%= trip.arrival %></td>
+                  <td><%= trip.departureTime %></td>
+                  <td><%= trip.price %> €</td>
+                </tr>
+            <% }) %>
+            <tr>
+              <th style="border-style: none;" class="bg-transparent" colspan="3"></th>
+              <td style="border-style: none;" class="bg-transparent">
+                <a href="/">
+                  <button type="button" class="btn btn-danger">Home</button>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% } %>
+
+  <%- include('./partials/footer') %>
 </body>
 </html>

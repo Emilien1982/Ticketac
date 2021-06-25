@@ -93,6 +93,9 @@ router.get('/confirm-checkout', async (req, res) => {
 
 /* Get Last trips */
 router.get('/last-trips', async (req, res) => {
+  if (!req.session.user){
+    return res.redirect('/login');
+  }
   const user = await userModel
     .findById(req.session.user.id)
     .populate('trips');

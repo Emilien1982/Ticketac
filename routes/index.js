@@ -30,7 +30,7 @@ router.get('/test', function(req, res, next) {
       price: 27
     }
   ];
-  console.log('LENGTH: ', results.length);
+  //console.log('LENGTH: ', results.length);
 
   res.render('results', { results });
 });
@@ -79,7 +79,7 @@ router.get('/add-trip', async (req, res) => {
   } else {
     req.session.user.trips = [req.query.trip_id]
   }
-  console.log('SESSION: ', req.session.user);
+  //console.log('SESSION: ', req.session.user);
   res.redirect('/checkout');
 });
 
@@ -89,16 +89,15 @@ router.get('/checkout', async (req, res) => {
   if (!req.session.user){
     return res.redirect('/login');
   }
-  console.log('TRIPS SESSION: ', req.session.user.trips);
+  //console.log('TRIPS SESSION: ', req.session.user.trips);
 
   const trips = [];
   for (let i = 0; i < req.session.user.trips.length; i++){
     const journey = await journeyModel.findById(req.session.user.trips[i]);
     trips.push(journey);
-    console.log('TRIPS DURING LOOP: ', trips);
+    //console.log('TRIPS DURING LOOP: ', trips);
   }
-
-  console.log('TRIPS FOR EJS: ', trips);
+  //console.log('TRIPS FOR EJS: ', trips);
   res.render('checkout', { trips });
 });
 
@@ -108,7 +107,8 @@ router.get('/confirm-checkout', async (req, res) => {
   }
 
   // les trips sont stockés dans le user de la BDD
-  const user = await userModel.findById(req.query.trip_id);
+  const user = await userModel.findById(req.session.user.id);
+  //console.log('USER: ', user);
   const trips = user.trips? [...user.trips] : [];
   req.session.user.trips.forEach( (trip_id) => {
     trips.push( trip_id );

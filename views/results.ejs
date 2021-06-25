@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('./head') %>
+  <%- include('./partials/head') %>
   <title>Ticketac - Results</title>
 </head>
 <body>
-  <%- include('./header') %>
+  <%- include('./partials/header') %>
 
   <% if (results.length < 1) { %>
     <div class="my-3 d-flex flex-column align-items-center">
@@ -15,7 +15,7 @@
       </a>
     </div>
   <% } else { %>
-    <div class="container narrow">
+    <div class="container narrow d-flex flex-column">
       <h2 class="mt-5 text-light">Tickets available on <%= dateFormater(results[0].date) %>:</h2>
       <div class="mt-3">
       <% results.forEach(result => { %>
@@ -42,7 +42,7 @@
   
 
 
-  <%- include('./footer') %>
+  <%- include('./partials/footer') %>
 
 
 

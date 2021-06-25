@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <%- include('./head') %>
+  <%- include('./partials/head') %>
   <title>Ticketac - Results</title>
 </head>
 <body>
-  <%- include('./header') %>
+  <%- include('./partials/header') %>
 <!-- PAGE A TESTER -->
   <% if (trips.length < 1) { %>
     <div class="my-3 d-flex flex-column align-items-center">
@@ -15,7 +15,7 @@
       </a>
     </div>
   <% } else { %>
-    <div class="container narrow">
+    <div class="container narrow d-flex flex-column">
       <h2 class="mt-5 text-light">My tickets :</h2>
       <div class="mt-3">
         <table class="table table-light">
@@ -36,7 +36,7 @@
                   <th scope="row"><%= index + 1 %></th>
                   <td><%= trip.departure %> / <%= trip.arrival %></td>
                   <td><%= dateFormaterFull(trip.date) %></td>
-                  <td><%= trip.departureTimer %></td>
+                  <td><%= trip.departureTime %></td>
                   <td><%= trip.price %> €</td>
                 </tr>
             <% }) %>
@@ -46,9 +46,11 @@
             </tr>
             <tr>
               <th style="border-style: none;" class="bg-transparent" colspan="4"></th>
-              <td style="border-style: none;" class="bg-transparent"><a href="/confirm-checkout"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Confirm
-              </button><button type="button" class="btn btn-danger"></button></a></td>
+              <td style="border-style: none;" class="bg-transparent">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Confirm
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -58,8 +60,29 @@
   <% } %>
 
 
-  <%- include('./footer') %>
+  <%- include('./partials/footer') %>
 
+
+  <!-- Modal part -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm payement</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Today only: 100% discount! 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="/confirm-checkout">
+            <button type="button" class="btn btn-danger">Pay</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

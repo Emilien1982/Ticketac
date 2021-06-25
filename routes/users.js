@@ -12,6 +12,8 @@ router.post('/sign-up', async function(req, res) {
   const email = req.body.email;
   const password = req.body.password;
   
+  console.log('DATA: ', name, firstName, email, password);
+
   // si une info est manquante on renvoie vers la page de login
   if (!name || !firstName || !email || !password) {
     return res.render('index', { message: 'You need to provide all the information' });

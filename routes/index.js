@@ -14,32 +14,6 @@ const capitaliser = (city) => {
 let DOMAIN_NAME = '';
 
 
-/* ROUTE DE TEST A SUPPRIMER AVANT COMMIT */
-router.get('/test', function(req, res, next) {
-  const results = [
-    {
-      _id: '60d4456035ad7d8621401285',
-      departure: 'Lyon',
-      arrival: 'Paris',
-      date: new Date(2018, 11, 2),
-      departureTime: "11:00",
-      price: 128
-    },
-    {
-      _id: '60d4456035ad7d862140127f',
-      departure: 'Paris',
-      arrival: 'Bordeaux',
-      date: new Date(2018, 11, 23),
-      departureTime: "6:00",
-      price: 27
-    }
-  ];
-  //console.log('LENGTH: ', results.length);
-
-  res.render('results', { results });
-});
-
-
 /* Sign In / Up */
 router.get('/login', (req, res) => {
   DOMAIN_NAME = req.protocol + '://' + req.get('host');
